@@ -62,6 +62,8 @@ class JoblyApi {
   /**Get companies by provided search filters:
    *  - nameLike (will find case-insensitive, partial matches)*/
 
+  //TODO: pass nameLike and term as a data
+  //data = {nameLike: term}
   static async getFilteredCompanies(term){
     let res = await this.request(`companies/?nameLike=${term}`);
     return res.companies;

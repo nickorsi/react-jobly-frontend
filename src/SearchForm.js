@@ -14,6 +14,8 @@ import React, { useState } from 'react';
  * { CompanyList, JobList } -> SearchForm
  */
 
+//TODO: add className to top html element
+
 function SearchForm ({ search }) {
   const [formData, setFormData] = useState("");
   console.log("SearchForm", "search= ", search, "formData=", formData);
