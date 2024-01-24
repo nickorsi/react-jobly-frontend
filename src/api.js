@@ -48,14 +48,21 @@ class JoblyApi {
 
   // Individual API routes
 
-  /** Get details on a company by handle. */
+  /** Get details on a company by handle.
+   * Returns { handle, name, description, numEmployees, logoUrl, jobs }
+   * where jobs is [{ id, title, salary, equity }, ...]
+  */
 
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);
+    console.log(res)
+    if("error" in res) return res.error;
     return res.company;
   }
 
-  /**Get all companies data. Can filter companies by term*/
+  /**Get all companies data. Can filter companies by term
+   * Returns [{handle, name, description, numEmployees, logoUrl}, ...]
+  */
 
   static async getAllCompanies(term) {
     let res;
@@ -68,7 +75,9 @@ class JoblyApi {
     return res.companies;
   }
 
-  /**Get all jobs. Can filter jobs by term. */
+  /**Get all jobs. Can filter jobs by term.
+   * Returns [{id, title, salary, equity, companyHandle, companyName}, ...]
+  */
 
   static async getAllJobs(term) {
     let res;
