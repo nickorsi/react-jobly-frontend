@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 /**
- * SearchForm component takes in prop search which is a callback and renders a 3
+ * SearchForm component takes in prop search which is a callback and renders a
  * searchbar. Has state to keep track of form data.
  *
  * Props:
@@ -28,4 +28,4 @@ function SearchForm ({ search }) {
   )
 };
 
-export default CompanyList;
+export default SearchForm;

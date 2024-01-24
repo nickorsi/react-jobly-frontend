@@ -5,7 +5,7 @@ import CompanyList from "./CompanyList"
 import JobList from "./JobList"
 import CompanyDetail from "./CompanyDetail"
 
-/** Routes to pages on Jobly app
+/** Routes to pages on Jobly app depending on path, shows different components
  *
  * Props: None
  *

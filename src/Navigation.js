@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import './Navigation.css'
 
-/** Displays nav bar with links to Home, Companies, and Jobs
+/** Displays navigatioal links to Home, Companies, and Jobs
  *
  * Props: None
  *

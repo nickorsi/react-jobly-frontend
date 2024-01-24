@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 /**
- * CompanyCard component takes in prop copmanyData and renders copmany info.
+ * CompanyCard component takes in prop companyData and renders company info.
  *
  * Props:
  * -companyData: {handle, name, description, numEmployees, logoUrl}
@@ -16,7 +17,9 @@ function CompanyCard ({ companyData }) {
   console.log("CompanyCard", "copmanyData= ", companyData);
 
   return (
-    <div>Company Card!</div>
+    <div>
+    <Link to="/companies/test">Company Card Test!</Link>
+    </div>
   )
 };
 
