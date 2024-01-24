@@ -28,19 +28,21 @@ function CompanyList () {
       setCompanies({data: companiesResult, isLoading: false });
     }
     fetchCompanies();
-  }, []);
+  }, [term]);
 
   if(companies.isLoading) return <p>Loading...</p>;
 
-  //useEffect with async function fetchAPI data after initial render, [] only
-  //render once, sets companies state to ALL companies
-  //OR RUN AFTER CHANGE IN TERM????
-  //ONLY ONE API METHOD GETS ALL OR FILTERED?
-  JoblyApi.getAllCompanies();
-  //isLoading, return <p>Loading...</p>
-
   //search function to invoke filter method from API, passed to SearchForm, will
   //set term state to the SearchForm data and update companies state
+
+  /**
+   * search function takes in term and updates term state and companies state.
+   */
+
+  function searchCompanies(term) {
+    setTerm(term);
+    setCompanies({data: null, isLoading: true})
+  }
 
   //useEffect with async function to filter data from API , dependent on [term]
   //renders after every term state. Sets companies state.
@@ -48,8 +50,13 @@ function CompanyList () {
 
   return (
     <div className="CompanyList-body">
-      <SearchForm />
-      {companies.data.map(c => <CompanyCard key={c.handle} companyData={c} />)}
+      <SearchForm term={term} search={searchCompanies}/>
+      {companies.data.length === 0
+        ? <p>Sorry, no results were found!</p>
+        : companies.data.map(
+            c => <CompanyCard key={c.handle} companyData={c} />
+          )
+      }
     </div>
   )
 };

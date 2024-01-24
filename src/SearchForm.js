@@ -6,6 +6,7 @@ import React, { useState } from 'react';
  * searchbar. Has state to keep track of form data.
  *
  * Props:
+ * -term: value to populate search bar with
  * -search: callback function
  *
  * State:
@@ -14,20 +15,49 @@ import React, { useState } from 'react';
  * { CompanyList, JobList } -> SearchForm
  */
 
-//TODO: add className to top html element
 
-function SearchForm ({ search }) {
-  const [formData, setFormData] = useState("");
+function SearchForm({ term, search }) {
+  const [formData, setFormData] = useState(term);
   console.log("SearchForm", "search= ", search, "formData=", formData);
 
-  // How to handle the value in search bar after search?
-  // Do we have to save it as state in the parent?
-  // Dont rely on parent passing in state, just have initial render default to ""
+  /**
+   * handleChange updates formData state based on user input.
+   */
+
+  function handleChange(evt) {
+    const userInput = evt.target.value;
+    setFormData(userInput);
+  }
+
+  /**
+   * handleSubmit invokes the search function passing in formData
+   */
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    search(formData);
+  }
+
   return (
-    <div>
-      Search Bar!
+    <div className="SearchForm">
+      <form className="SearchForm-form">
+        <input
+          name="search"
+          type="text"
+          value={formData}
+          placeholder="Enter search term..."
+          onChange={handleChange}
+        >
+        </input>
+        <button
+          className="SearchForm-button"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+      </form>
     </div>
-  )
+  );
 };
 
 export default SearchForm;
