@@ -67,8 +67,11 @@ class JoblyApi {
     return res.companies;
   }
 
-  static async getAllJobs(){
+  /**Get all jobs */
 
+  static async getAllJobs(){
+    let res = await this.request(`jobs/`);
+    return res.jobs;
   }
 
 }
