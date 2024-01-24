@@ -18,6 +18,7 @@ class JoblyApi {
 
   static async request(endpoint, data = {}, method = "GET") {
     const url = new URL(`${BASE_URL}/${endpoint}`);
+    console.log(url)
     const headers = {
       authorization: `Bearer ${JoblyApi.token}`,
       'content-type': 'application/json',
@@ -31,6 +32,8 @@ class JoblyApi {
     const body = (method !== "GET")
       ? JSON.stringify(data)
       : undefined;
+
+    console.log(url)
 
     const resp = await fetch(url, { method, body, headers });
 

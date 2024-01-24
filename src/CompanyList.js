@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CompanyCard from './CompanyCard';
 import SearchForm from './SearchForm';
+import JoblyApi from './api';
 
 /**
  * CompanyList component displays search bar and list of company cards
@@ -20,9 +21,19 @@ function CompanyList () {
   const [companies, setCompanies] = useState({data: null, isLoading: true})
   const [term, setTerm] = useState('');
 
-  //async function fetchAPI data after initial render, []
-  //TODO: how often to make that request? should the dependency be an [],
-  // or based on companies data array
+  //useEffect with async function fetchAPI data after initial render, [] only
+  //render once, sets companies state to ALL companies
+  //OR RUN AFTER CHANGE IN TERM????
+  //ONLY ONE API METHOD GETS ALL OR FILTERED?
+  JoblyApi.getAllCompanies();
+  //isLoading, return <p>Loading...</p>
+
+  //search function to invoke filter method from API, passed to SearchForm, will
+  //set term state to the SearchForm data and update companies state
+
+  //useEffect with async function to filter data from API , dependent on [term]
+  //renders after every term state. Sets companies state.
+
 
   return (
     <div>

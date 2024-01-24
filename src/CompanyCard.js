@@ -17,8 +17,18 @@ function CompanyCard ({ companyData }) {
   console.log("CompanyCard", "copmanyData= ", companyData);
 
   return (
-    <div>
-    <Link to="/companies/test">Company Card Test!</Link>
+    <div className="CompanyCard">
+      <Link to="/companies/test">
+        <h5 className="CompanyCard-name">{companyData.name}</h5>
+        <p className="CompanyCard-description">{companyData.description}</p>
+        {companyData.logoUrl === null
+          ? "" //TODO: How to handle case with no logo?
+          : <img
+            className="CompanyCard-logo"
+            src={companyData.logoUrl}
+            alt="company logo"></img>
+        }
+      </Link>
     </div>
   )
 };
