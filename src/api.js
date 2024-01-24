@@ -76,8 +76,6 @@ class JoblyApi {
     return res.jobs;
   }
 
-  //TODO: jobs for a company, filtering done in frontend?
-
 }
 
 export default JoblyApi;
