@@ -18,7 +18,7 @@ class JoblyApi {
 
   static async request(endpoint, data = {}, method = "GET") {
     const url = new URL(`${BASE_URL}/${endpoint}`);
-    console.log(url)
+    console.log(url);
     const headers = {
       authorization: `Bearer ${JoblyApi.token}`,
       'content-type': 'application/json',
@@ -33,7 +33,7 @@ class JoblyApi {
       ? JSON.stringify(data)
       : undefined;
 
-    console.log(url)
+    console.log(url);
 
     const resp = await fetch(url, { method, body, headers });
 
@@ -55,26 +55,22 @@ class JoblyApi {
     return res.company;
   }
 
-  /**Get all companies */
+  /**Get all companies data. Can filter companies by term*/
 
-  static async getAllCompanies(){
-    let res = await this.request(`companies/`);
-    return res.companies;
-  }
-
-  /**Get companies by provided search filters:
-   *  - nameLike (will find case-insensitive, partial matches)*/
-
-  //TODO: pass nameLike and term as a data
-  //data = {nameLike: term}
-  static async getFilteredCompanies(term){
-    let res = await this.request(`companies/?nameLike=${term}`);
+  static async getAllCompanies(term) {
+    let res;
+    if (term === "") {
+      res = await this.request(`companies/`);
+    } else {
+      const data = { nameLike: term };
+      res = await this.request(`companies/`, data);
+    }
     return res.companies;
   }
 
   /**Get all jobs */
 
-  static async getAllJobs(){
+  static async getAllJobs() {
     let res = await this.request(`jobs/`);
     return res.jobs;
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CompanyCard from './CompanyCard';
 import SearchForm from './SearchForm';
 import JoblyApi from './api';
@@ -21,6 +21,17 @@ function CompanyList () {
   const [companies, setCompanies] = useState({data: null, isLoading: true})
   const [term, setTerm] = useState('');
 
+  useEffect(function fetchCompaniesWhenMounted() {
+    async function fetchCompanies(){
+      const companiesResult = await JoblyApi.getAllCompanies(term);
+      console.log("companesResult:", companiesResult);
+      setCompanies({data: companiesResult, isLoading: false });
+    }
+    fetchCompanies();
+  }, []);
+
+  if(companies.isLoading) return <p>Loading...</p>;
+
   //useEffect with async function fetchAPI data after initial render, [] only
   //render once, sets companies state to ALL companies
   //OR RUN AFTER CHANGE IN TERM????
@@ -36,9 +47,9 @@ function CompanyList () {
 
 
   return (
-    <div>
+    <div className="CompanyList-body">
       <SearchForm />
-      <CompanyCard />
+      {companies.data.map(c => <CompanyCard key={c.handle} companyData={c} />)}
     </div>
   )
 };
