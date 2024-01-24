@@ -17,23 +17,18 @@ import JoblyApi from './api';
  * RoutesList -> CompanyList -> {SearchForm, CompanyCard}
  */
 
-function CompanyList () {
-  const [companies, setCompanies] = useState({data: null, isLoading: true})
+function CompanyList() {
+  const [companies, setCompanies] = useState({ data: null, isLoading: true });
   const [term, setTerm] = useState('');
 
   useEffect(function fetchCompaniesWhenMounted() {
-    async function fetchCompanies(){
+    async function fetchCompanies() {
       const companiesResult = await JoblyApi.getAllCompanies(term);
       console.log("companesResult:", companiesResult);
-      setCompanies({data: companiesResult, isLoading: false });
+      setCompanies({ data: companiesResult, isLoading: false });
     }
     fetchCompanies();
   }, [term]);
-
-  if(companies.isLoading) return <p>Loading...</p>;
-
-  //search function to invoke filter method from API, passed to SearchForm, will
-  //set term state to the SearchForm data and update companies state
 
   /**
    * search function takes in term and updates term state and companies state.
@@ -41,24 +36,22 @@ function CompanyList () {
 
   function searchCompanies(term) {
     setTerm(term);
-    setCompanies({data: null, isLoading: true})
+    setCompanies({ data: null, isLoading: true });
   }
 
-  //useEffect with async function to filter data from API , dependent on [term]
-  //renders after every term state. Sets companies state.
-
+  if (companies.isLoading) return <p>Loading...</p>;
 
   return (
     <div className="CompanyList-body">
-      <SearchForm term={term} search={searchCompanies}/>
+      <SearchForm term={term} search={searchCompanies} />
       {companies.data.length === 0
         ? <p>Sorry, no results were found!</p>
         : companies.data.map(
-            c => <CompanyCard key={c.handle} companyData={c} />
-          )
+          c => <CompanyCard key={c.handle} companyData={c} />
+        )
       }
     </div>
-  )
+  );
 };
 
 export default CompanyList;

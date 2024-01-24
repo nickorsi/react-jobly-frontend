@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 /**
  * SearchForm component takes in prop search which is a callback and renders a
  * searchbar. Has state to keep track of form data.
@@ -40,7 +39,7 @@ function SearchForm({ term, search }) {
 
   return (
     <div className="SearchForm">
-      <form className="SearchForm-form">
+      <form className="SearchForm-form" onSubmit={handleSubmit}>
         <input
           name="search"
           type="text"
@@ -49,10 +48,7 @@ function SearchForm({ term, search }) {
           onChange={handleChange}
         >
         </input>
-        <button
-          className="SearchForm-button"
-          onClick={handleSubmit}
-        >
+        <button className="SearchForm-button">
           Submit
         </button>
       </form>

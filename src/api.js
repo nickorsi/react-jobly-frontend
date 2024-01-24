@@ -68,10 +68,16 @@ class JoblyApi {
     return res.companies;
   }
 
-  /**Get all jobs */
+  /**Get all jobs. Can filter jobs by term. */
 
-  static async getAllJobs() {
-    let res = await this.request(`jobs/`);
+  static async getAllJobs(term) {
+    let res;
+    if (term === "") {
+      res = await this.request(`jobs/`);
+    } else {
+      const data = { title: term };
+      res = await this.request(`jobs/`, data);
+    }
     return res.jobs;
   }
 

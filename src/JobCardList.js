@@ -14,14 +14,19 @@ import JobCard from './JobCard';
  * {CompanyDetail, JobList} -> JobCardList -> JobCard
  */
 
-function JobCardList ({ jobsData }) {
+function JobCardList({ jobsData }) {
   console.log("JobCardList", "jobsData= ", jobsData);
 
   return (
-    <div>
-      <JobCard />
+    <div className="JobCardList-body">
+      {jobsData.data.length === 0
+        ? <p>Sorry, no results were found!</p>
+        : jobsData.data.map(
+          j => <JobCard key={j.id} jobData={j} />
+        )
+      }
     </div>
-  )
+  );
 };
 
 export default JobCardList;
