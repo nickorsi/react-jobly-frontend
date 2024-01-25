@@ -91,6 +91,19 @@ class JoblyApi {
     return res.jobs;
   }
 
+  /** getToken, takes in a string 'username' and a string 'password' to
+   * validate user.
+   * Returns a string representing the token on successful
+   * login, error on failure.
+   */
+
+  static async getToken(username, password) {
+    const data = { username, password};
+    const res = await this.request('auth/token', data, "POST");
+
+    return res.token;
+  }
+
 }
 
 export default JoblyApi;
