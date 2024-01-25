@@ -18,8 +18,10 @@ function Navigation(){
       <NavLink to="/" end>Jobly</NavLink>
       <NavLink to="/companies" end>Companies</NavLink>
       <NavLink to="jobs" end>Jobs</NavLink>
-      <NavLink to="/companies/baker-santos" end>Baker-Santos</NavLink>
-
+      {/* <NavLink to="/companies/baker-santos" end>Baker-Santos</NavLink> */}
+      {/* Above link helps demonstrate potential for subtle bug on CompanyDetails
+      useEffect, where if dependecy wasn't specified for company handle, could
+      navigate to a page that did not demount the company info. */}
     </nav>
   );
 }

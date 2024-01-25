@@ -16,8 +16,7 @@ import React, { useState } from 'react';
 
 
 function SearchForm({ term, search }) {
-  const [formData, setFormData] = useState(term);
-  //TODO: change formData -> searchTerm, setSearchTerm
+  const [searchTerm, setSearchTerm] = useState(term);
   // console.log("SearchForm", "search= ", search, "formData=", formData);
 
   /**
@@ -26,7 +25,7 @@ function SearchForm({ term, search }) {
 
   function handleChange(evt) {
     const userInput = evt.target.value;
-    setFormData(userInput);
+    setSearchTerm(userInput);
   }
 
   /**
@@ -35,7 +34,7 @@ function SearchForm({ term, search }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    search(formData);
+    search(searchTerm);
   }
 
   return (
@@ -44,7 +43,7 @@ function SearchForm({ term, search }) {
         <input
           name="search"
           type="text"
-          value={formData}
+          value={searchTerm}
           placeholder="Enter search term..."
           onChange={handleChange}
         >

@@ -15,13 +15,13 @@ import './JobCard.css'
 
 function JobCard({ jobData }) {
   // console.log("JobCard", "jobData= ", jobData);
-  //TODO: destructure jobData
+  const {title, companyName, salary, equity} = jobData
   return (
     <div className="JobCard">
-      <h4><b>{jobData.title}</b></h4>
-      <h5>{jobData.companyName}</h5>
-      <p>Salary: {jobData.salary}</p>
-      <p>Equity: {jobData.equity}</p>
+      <h4><b>{title}</b></h4>
+      <h5>{companyName}</h5>
+      <p>Salary: {salary}</p>
+      <p>Equity: {equity}</p>
     </div>
   );
 };

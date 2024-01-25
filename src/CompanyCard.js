@@ -28,7 +28,7 @@ function CompanyCard({ companyData }) {
           : <img
             className="CompanyCard-logo"
             src={companyData.logoUrl}
-            alt="company logo"></img>
+            alt={`${companyData.name} logo`}></img>
         }
       </Link>
     </div>

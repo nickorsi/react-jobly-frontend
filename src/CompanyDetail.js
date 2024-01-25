@@ -21,10 +21,13 @@ import JoblyApi from './api';
  * RoutesList -> CompanyDetail -> JobCardList
  *
  */
-//TODO: check for error in catch and craft an error msg
+//FURTHER STUDY: As alternative to how error was handled below, If data can
+//have errors associated with it, can save in state and handle it here
+//{data, isLoading, error: "" or null}. Can then cract the error message in the
+//error property of the state.
 
 function CompanyDetail() {
-  const [company, setCompany] = useState({ data: null, isLoading: true, error: null });
+  const [company, setCompany] = useState({ data: null, isLoading: true});
   const { handle } = useParams();
 
   console.log("Company Detail", company, "handle:", handle);
@@ -41,6 +44,10 @@ function CompanyDetail() {
     }
     fetchCompany();
   }, [handle]);
+  //POTENTIAL SUBTLE BUG!! Whenever useEffect relies on a variable for the
+  //answer should include this in the dependecy to avoid potential bugs where
+  //variable is changed indirectly but useEffect doesn't run and re-render in
+  //reponse.
 
   if (company.isLoading) return <p>Loading...</p>;
 
