@@ -15,7 +15,7 @@ import './JobCard.css'
 
 function JobCard({ jobData }) {
   // console.log("JobCard", "jobData= ", jobData);
-
+  //TODO: destructure jobData
   return (
     <div className="JobCard">
       <h4><b>{jobData.title}</b></h4>

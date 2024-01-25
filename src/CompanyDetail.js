@@ -21,14 +21,16 @@ import JoblyApi from './api';
  * RoutesList -> CompanyDetail -> JobCardList
  *
  */
+//TODO: check for error in catch and craft an error msg
 
 function CompanyDetail() {
-  const [company, setCompany] = useState({ data: null, isLoading: true });
+  const [company, setCompany] = useState({ data: null, isLoading: true, error: null });
   const { handle } = useParams();
 
-  // console.log("Company Detail", company.data?.jobs);
+  console.log("Company Detail", company, "handle:", handle);
 
   useEffect(function fetchCompanyWhenMounted() {
+    console.log("fetchCompanyWhenMounted is running")
     async function fetchCompany() {
       try {
         const companyResult = await JoblyApi.getCompany(handle);
@@ -38,7 +40,7 @@ function CompanyDetail() {
       }
     }
     fetchCompany();
-  }, []);
+  }, [handle]);
 
   if (company.isLoading) return <p>Loading...</p>;
 
@@ -47,7 +49,7 @@ function CompanyDetail() {
       {company.data === null
         ? <p>Sorry, company not found: {handle} </p>
         : <div>
-          <h1>{company.data.name}</h1>
+          <h1>({handle}) {company.data.name}</h1>
           <p>{company.data.description}</p>
           <JobCardList jobsData={company.data.jobs} />
         </div>

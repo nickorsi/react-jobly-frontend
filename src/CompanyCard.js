@@ -13,6 +13,7 @@ import "./CompanyCard.css";
  *
  * CompanyList -> CompanyCard
  */
+//TODO: fix alt attr
 
 function CompanyCard({ companyData }) {
   // console.log("CompanyCard", "copmanyData= ", companyData);

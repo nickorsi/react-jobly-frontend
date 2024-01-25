@@ -18,7 +18,7 @@ class JoblyApi {
 
   static async request(endpoint, data = {}, method = "GET") {
     const url = new URL(`${BASE_URL}/${endpoint}`);
-    console.log(url);
+    console.debug(url);
     const headers = {
       authorization: `Bearer ${JoblyApi.token}`,
       'content-type': 'application/json',
@@ -33,7 +33,7 @@ class JoblyApi {
       ? JSON.stringify(data)
       : undefined;
 
-    console.log(url);
+    console.debug(url);
 
     const resp = await fetch(url, { method, body, headers });
 
@@ -60,7 +60,7 @@ class JoblyApi {
     return res.company;
   }
 
-  /**Get all companies data. Can filter companies by term
+  /**Get all companies data. Can filter companies by term //TODO: specify term is title
    * Returns [{handle, name, description, numEmployees, logoUrl}, ...]
   */
 
@@ -75,7 +75,7 @@ class JoblyApi {
     return res.companies;
   }
 
-  /**Get all jobs. Can filter jobs by term.
+  /**Get all jobs. Can filter jobs by term. //TODO: specify term
    * Returns [{id, title, salary, equity, companyHandle, companyName}, ...]
   */
 

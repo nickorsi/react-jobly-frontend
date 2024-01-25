@@ -21,6 +21,8 @@ function CompanyList() {
   const [companies, setCompanies] = useState({ data: null, isLoading: true });
   const [term, setTerm] = useState('');
 
+  console.log("CompanyList, companies:", companies, "term:", term);
+
   useEffect(function fetchCompaniesWhenMounted() {
     async function fetchCompanies() {
       const companiesResult = await JoblyApi.getAllCompanies(term);
@@ -34,8 +36,8 @@ function CompanyList() {
    */
 
   function searchCompanies(term) {
-    setTerm(term);
     setCompanies({ data: null, isLoading: true });
+    setTerm(term);
   }
 
   if (companies.isLoading) return <p>Loading...</p>;

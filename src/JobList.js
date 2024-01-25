@@ -35,8 +35,8 @@ function JobList () {
    * and jobs state
    */
   function searchJobs(term){
-    setTerm(term);
     setJobs({ data: null, isLoading: true });
+    setTerm(term);
   }
 
   if(jobs.isLoading) return <p>Loading... </p>;

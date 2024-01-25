@@ -4,3 +4,17 @@
   text-align:left;
   padding: 10px 20px;
 }
+
+.CompanyCard a {
+  color: black;
+  text-decoration: none;
+}
+
+.CompanyCard a:hover {
+  color: blue;
+}
+
+.CompanyCard img {
+  max-width: 100px;
+
+}

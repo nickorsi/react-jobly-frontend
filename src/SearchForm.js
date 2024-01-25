@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 
 function SearchForm({ term, search }) {
   const [formData, setFormData] = useState(term);
+  //TODO: change formData -> searchTerm, setSearchTerm
   // console.log("SearchForm", "search= ", search, "formData=", formData);
 
   /**
