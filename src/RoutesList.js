@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Homepage from "./Homepage";
-import CompanyList from "./CompanyList"
-import JobList from "./JobList"
-import CompanyDetail from "./CompanyDetail"
+import CompanyList from "./CompanyList";
+import JobList from "./JobList";
+import CompanyDetail from "./CompanyDetail";
 
 /** Routes to pages on Jobly app depending on path, shows different components
  *
@@ -16,11 +16,26 @@ import CompanyDetail from "./CompanyDetail"
 function RoutesList() {
   return (
     <Routes>
-      <Route path="/" element={<Homepage />}/>
-      <Route path="/companies" element={<CompanyList />}/>
-      <Route path="/jobs" element={<JobList />}/>
-      <Route path="/companies/:handle" element={<CompanyDetail />}/>
-      <Route path="/*" element={<Navigate to="/"/> }/>
+      <Route
+        path="/"
+        element={<Homepage />}
+      />
+      <Route
+        path="/companies"
+        element={<CompanyList />}
+      />
+      <Route
+        path="/jobs"
+        element={<JobList />}
+      />
+      <Route
+        path="/companies/:handle"
+        element={<CompanyDetail />}
+      />
+      <Route
+        path="/*"
+        element={<Navigate to="/" />}
+      />
     </Routes>
   );
 }

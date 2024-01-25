@@ -14,7 +14,7 @@ import './JobCard.css'
  */
 
 function JobCard({ jobData }) {
-  console.log("JobCard", "jobData= ", jobData);
+  // console.log("JobCard", "jobData= ", jobData);
 
   return (
     <div className="JobCard">

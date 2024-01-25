@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import "./CompanyCard.css";
 
 /**
  * CompanyCard component takes in prop companyData and renders company info.
@@ -13,12 +14,12 @@ import { Link } from 'react-router-dom'
  * CompanyList -> CompanyCard
  */
 
-function CompanyCard ({ companyData }) {
-  console.log("CompanyCard", "copmanyData= ", companyData);
+function CompanyCard({ companyData }) {
+  // console.log("CompanyCard", "copmanyData= ", companyData);
 
   return (
     <div className="CompanyCard">
-      <Link to="/companies/test">
+      <Link to={`/companies/${companyData.handle}`}>
         <h5 className="CompanyCard-name">{companyData.name}</h5>
         <p className="CompanyCard-description">{companyData.description}</p>
         {companyData.logoUrl === null
@@ -30,7 +31,7 @@ function CompanyCard ({ companyData }) {
         }
       </Link>
     </div>
-  )
+  );
 };
 
 export default CompanyCard;

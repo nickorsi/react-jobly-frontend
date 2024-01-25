@@ -15,13 +15,13 @@ import JobCard from './JobCard';
  */
 
 function JobCardList({ jobsData }) {
-  console.log("JobCardList", "jobsData= ", jobsData);
+  // console.log("JobCardList", "jobsData= ", jobsData);
 
   return (
     <div className="JobCardList-body">
-      {jobsData.data.length === 0
+      {jobsData.length === 0
         ? <p>Sorry, no results were found!</p>
-        : jobsData.data.map(
+        : jobsData.map(
           j => <JobCard key={j.id} jobData={j} />
         )
       }

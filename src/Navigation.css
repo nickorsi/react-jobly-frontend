@@ -3,3 +3,11 @@ nav a {
   width: 100px;
   padding: 10px 0;
 }
+
+nav a.active {
+  font-weight: bold;
+}
+
+nav a:hover{
+  color: blue;
+}

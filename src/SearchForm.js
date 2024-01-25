@@ -17,7 +17,7 @@ import React, { useState } from 'react';
 
 function SearchForm({ term, search }) {
   const [formData, setFormData] = useState(term);
-  console.log("SearchForm", "search= ", search, "formData=", formData);
+  // console.log("SearchForm", "search= ", search, "formData=", formData);
 
   /**
    * handleChange updates formData state based on user input.

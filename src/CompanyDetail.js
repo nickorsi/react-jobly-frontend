@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useParams} from 'react-router-dom';
+import { useParams, Navigate} from 'react-router-dom';
 import JobCardList from './JobCardList';
 import JoblyApi from './api';
 
@@ -22,20 +22,20 @@ import JoblyApi from './api';
  *
  */
 
-function CompanyDetail () {
-  const [company, setCompany] = useState({data:null, isLoading: true});
+function CompanyDetail() {
+  const [company, setCompany] = useState({ data: null, isLoading: true });
   const { handle } = useParams();
 
-  console.log("CompanyDetail", "companyJobs= ", company, "handle= ", handle);
-
-  //TODO: Is this approach right?
-  //TODO: handle bad params here - when we make fetch request, if we get an error, Navigate to homepage
+  // console.log("Company Detail", company.data?.jobs);
 
   useEffect(function fetchCompanyWhenMounted() {
     async function fetchCompany() {
-      const companyResult = await JoblyApi.getCompany(handle);
-      console.log("companyResult:", companyResult);
-      setCompany({ data: companyResult, isLoading: false });
+      try {
+        const companyResult = await JoblyApi.getCompany(handle);
+        setCompany({ data: companyResult, isLoading: false });
+      } catch(err){
+        setCompany({ data: null , isLoading: false});
+      }
     }
     fetchCompany();
   }, []);
@@ -44,16 +44,16 @@ function CompanyDetail () {
 
   return (
     <div className="CompanyDetail">
-      {company.data.status === 404
-        ? <p>{company.data.message}</p>
+      {company.data === null
+        ? <p>Sorry, company not found: {handle} </p>
         : <div>
-            <h1>{company.data.name}</h1>
-            <p>{company.data.description}</p>
-            <JobCardList jobsData={company.data.jobs}/>
-          </div>
+          <h1>{company.data.name}</h1>
+          <p>{company.data.description}</p>
+          <JobCardList jobsData={company.data.jobs} />
+        </div>
       }
     </div>
-  )
+  );
 };
 
 export default CompanyDetail;
