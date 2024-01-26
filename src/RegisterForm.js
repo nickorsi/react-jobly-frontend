@@ -24,7 +24,8 @@ const DEFAULT_INITIAL_DATA = {
  * RouteList -> RegisterForm
  */
 
-function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, userData }) {
+function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, user }) {
+  console.log("Register userData:", user);
   const [formData, setFormData] = useState(initialData);
   console.log("RegisterForm formData:", formData);
 
@@ -51,57 +52,70 @@ function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, userData }
 
   return (
     <div className="RegisterForm">
-      <form className="RegisterForm-form" onSubmit={handleSubmit}>
-        <label htmlFor="register-username">Username</label>
-        <input
-          id="register-username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
+      <h1>Sign Up</h1>
+      <div className="RegisterForm-container">
+        <form className="RegisterForm-form" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="register-username">Username</label>
+            <input
+              id="register-username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="register-password">Password</label>
+            <input
+              id="register-password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
 
-        <label htmlFor="register-password">Password</label>
-        <input
-          id="register-password"
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          <div>
+            <label htmlFor="register-fn">First name</label>
+            <input
+              id="register-fn"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+          </div>
 
-        <label htmlFor="register-fn">First name</label>
-        <input
-          id="register-fn"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-        />
+          <div>
+            <label htmlFor="register-ln">Last name</label>
+            <input
+              id="register-ln"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </div>
 
-        <label htmlFor="register-ln">Last name</label>
-        <input
-          id="register-ln"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-        />
+          <div>
+            <label htmlFor="register-email">Email</label>
+            <input
+              id="register-email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
 
-        <label htmlFor="register-email">Email</label>
-        <input
-          id="register-email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {userData.error
-          ? <div className="RegisterForm-error">
-              {userData.errors.message.map((e, i) => <p key={i} >{e}</p>)}
+          {user.error
+            ? <div className="RegisterForm-error">
+              {user.errors.message.map((e, i) => <p key={i} >{e}</p>)}
             </div>
-          : ""
-        }
-        <button className="RegisterForm-button">
-          Submit
-        </button>
-      </form>
+            : ""
+          }
+          <button className="RegisterForm-button">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

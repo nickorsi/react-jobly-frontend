@@ -16,7 +16,7 @@ import './Navigation.css'
 
 function Navigation({logout, user}){
   return(
-      user
+      user.userData
         ? <nav className="Navigation">
             <NavLink to="/" end>Jobly</NavLink>
             <NavLink to="/companies" end>Companies</NavLink>

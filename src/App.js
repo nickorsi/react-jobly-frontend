@@ -37,7 +37,7 @@ function App() {
   const [token, setToken] = useState(null);
 
 
-/**Get user data and set userData if token exists */
+  /**Get user data and set userData if token exists */
   useEffect(function fetchUserDataOnMount() {
     async function fetchUserData() {
       const userResult = await JoblyApi.getUser(user.userData);
@@ -51,63 +51,78 @@ function App() {
     if (token) fetchUserData();
   }, [token]);
 
-/**
- * loginUser function will take in strings 'username' and 'password'. Will
- * attempt to login user with a try/catch block. If successful, update token
- * state. If error, update user state with error.
- */
+  /**
+   * loginUser function will take in strings 'username' and 'password'. Will
+   * attempt to login user with a try/catch block. If successful, update token
+   * state. If error, update user state with error.
+   */
 
-async function loginUser(username, password) {
-  let token;
-  try {
-    token = await JoblyApi.getToken(username, password);
-  } catch (err) {
+  async function loginUser(username, password) {
+    let token;
+    try {
+      token = await JoblyApi.getToken(username, password);
+    } catch (err) {
+      setUser({
+        userData: null,
+        isLoading: true,
+        error: true
+      });
+    }
     setUser({
-      userData: null,
+      userData: username,
       isLoading: true,
-      error: true
+      error: null
     });
+    setToken(token);
   }
-  setUser({
-    userData: username,
-    isLoading: true,
-    error: null
-  });
-  setToken(token);
-}
 
-/**
- * registerUser function
- */
+  /**
+   * registerUser function
+   *
+   */
+  function registerUser() {
+    console.log("RegisterUser");
+  };
+  /**
+   * logoutUser function
+   */
 
-/**
- * logoutUser function
- */
+  function logoutUser() {
+    console.log("logoutUser");
+  };
 
-function logoutUser() {
- console.log("HI")
-};
+  /**
+   * editProfile function
+   */
+  function editProfile() {
+    console.log("editProfile");
+  };
 
-/**
- * updateProfile function
- */
+  /**
+   * applyToJob function
+   */
+  function applyToJob(id) {
+    console.log("applyToJob");
+  };
 
-/**
- * applyToJob function
- */
+  // if(user.isLoading) return <p>Loading...</p>
 
-// if(user.isLoading) return <p>Loading...</p>
-
-return (
-  <div className="App">
-    <BrowserRouter>
-      <userContext.Provider value={user.userData}>
-        <Navigation logout={logoutUser} user={user.userData}/>
-        <RoutesList />
-      </userContext.Provider>
-    </BrowserRouter>
-  </div>
-);
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <userContext.Provider value={user}>
+          <Navigation logout={logoutUser} user={user} />
+          <RoutesList
+            user={user}
+            login={loginUser}
+            register={registerUser}
+            editProfile={editProfile}
+            applyToJob={applyToJob}
+          />
+        </userContext.Provider>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;

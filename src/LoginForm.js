@@ -20,7 +20,7 @@ const DEFAULT_INITIAL_DATA = {
  * RouteList -> LoginForm
  */
 
-function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, userData }) {
+function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, user }) {
   const [formData, setFormData] = useState(initialData);
   console.log("LoginForm formData:", formData);
 
@@ -48,34 +48,40 @@ function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, userData }) {
 
   return (
     <div className="LoginForm">
-      <form className="LoginForm-form" onSubmit={handleSubmit}>
-        <label htmlFor="login-username">Username</label>
-        <input
-          id="login-username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
+      <h1>Log In</h1>
+      <div className="LoginForm-container">
+        <form className="LoginForm-form" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="login-username">Username</label>
+            <input
+              id="login-username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="login-password">Password</label>
+            <input
+              id="login-password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
 
-        <label htmlFor="login-password">Password</label>
-        <input
-          id="login-password"
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-
-        {userData.error
-          ? <div className="LoginForm-error">
+          {user.error
+            ? <div className="LoginForm-error">
               <p className="LoginForm-error-ms" >Invalid username/password</p>
             </div>
-          : ""
-        }
-        <button className="LoginForm-button">
-          Submit
-        </button>
-      </form>
+            : ""
+          }
+          <button className="LoginForm-button">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -23,15 +23,15 @@ import RegisterForm from './RegisterForm.js';
  * App -> RoutesList -> {Homepage, CompanyList, CompanyDetail, JobList}
  */
 function RoutesList({
+  user,
   login,
   register,
-  updateProfile,
-  userData,
+  editProfile,
   applyToJob }) {
 
   return (
     <div>
-      {userData
+      {user.userData
         ?
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -40,7 +40,7 @@ function RoutesList({
           <Route
             path="/profile"
             element={<EditProfileForm
-              updateProfile={updateProfile} />} />
+              updateProfile={editProfile} />} />
           <Route path="/companies/:handle" element={<CompanyDetail />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
@@ -49,11 +49,15 @@ function RoutesList({
           <Route
             path="/login"
             element={<LoginForm
-              loginUser={login} />} />
+              loginUser={login}
+              user={user}
+            />} />
           <Route
             path="/register"
             element={<RegisterForm
-              register={register} />} />
+              register={register}
+              user={user}
+            />} />
           <Route path="/" element={<Homepage />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
