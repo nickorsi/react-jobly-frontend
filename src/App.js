@@ -58,23 +58,24 @@ function App() {
    * state with error.
    */
 
-  async function loginUser({username, password}) {
+  async function loginUser({ username, password }) {
     let token;
     try {
       token = await JoblyApi.getToken(username, password);
+      setUser({
+        userData: username,
+        isLoading: true,
+        error: null
+      });
+      setToken(token);
     } catch (err) {
+      console.log("login error!");
       setUser({
         userData: null,
         isLoading: true,
         error: true
       });
     }
-    setUser({
-      userData: username,
-      isLoading: true,
-      error: null
-    });
-    setToken(token);
   }
 
   /**
@@ -89,7 +90,12 @@ function App() {
    */
 
   function logoutUser() {
-    console.log("logoutUser");
+    setUser({
+      userData: null,
+      isLoading: false,
+      error: null
+    });
+    setToken(null);
   };
 
   /**

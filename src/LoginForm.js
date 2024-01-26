@@ -71,10 +71,14 @@ function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, user }) {
             />
           </div>
 
+
           {user.error
             ? <div className="LoginForm-error">
               <p className="LoginForm-error-ms" >Invalid username/password</p>
-            </div>
+
+            </div>//TODO: Bug here where error msg will persist after unsuccessful
+            //login, moving to a different page and coming back to login. Error msg will continue to show
+            //maybe we can us the user setter function to reset errors on the user to null after displaying the msg?
             : ""
           }
           <button className="LoginForm-button">
