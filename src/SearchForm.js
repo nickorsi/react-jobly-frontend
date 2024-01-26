@@ -43,7 +43,7 @@ function SearchForm({ term, search }) {
         <input
           name="search"
           type="text"
-          value={searchTerm}
+          placeholder={searchTerm}
           placeholder="Enter search term..."
           onChange={handleChange}
         >

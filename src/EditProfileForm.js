@@ -49,8 +49,9 @@ function EditProfileForm({ initialData, editProfile, userData }) {
         <input
           id="EditProfile-username"
           name="username"
-          value={formData.username}
+          placeholder={formData.username}
           onChange={handleChange}
+          disabled
         />
 
         <label htmlFor="EditProfile-fn">First name</label>
@@ -91,4 +92,4 @@ function EditProfileForm({ initialData, editProfile, userData }) {
   );
 };
 
-export default RegisterForm;
+export default EditProfileForm;

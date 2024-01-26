@@ -5,6 +5,17 @@ import JoblyApi  from './api.js';
 import React, { useState } from 'react';
 import './App.css';
 
+//TODO: Homepage, set a ternary so that if a user is logged in, then display
+//homepage with greeting and user's name, else, display login, signup buttons
+
+//TODO: Navigation, set a ternary so that if a user is logged in,
+// then display nav with navlinks to home, companies, profile, jobs, logout
+// else display home, login, signup
+
+//TODO: login:
+
+
+
 /** Renders Jobly App and Navigation componenet
  *
  * Props: None
@@ -22,7 +33,13 @@ function App() {
     isLoading: true,
     error: null
   });
-  const [token, setToken] = useState();
+  const [token, setToken] = useState("");
+
+  //TODO: useEffect(() => ( JoblyAPI.getUser )), [token]
+
+  //function login({username, password}){
+
+  }
 
   /**
    * loginUser function will take in strings 'username' and 'password'. Will
@@ -30,12 +47,13 @@ function App() {
    * state. If error, update user state with error.
    */
 
+  //TODO: rename this async function
   async function loginUser(username, password) {
     let token;
     let user;
     try {
       token = await JoblyApi.getToken(username, password);
-      user = await JoblyApi.getUser()
+      // user = await JoblyApi.getUser(username)
     } catch (err) {
       setUser({
         userData: null,
