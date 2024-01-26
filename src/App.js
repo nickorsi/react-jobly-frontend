@@ -1,8 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
-import  Navigation  from './Navigation'
-import RoutesList from './RoutesList'
-import JoblyApi  from './api.js';
-import React, { useState } from 'react';
+import Navigation from './Navigation';
+import RoutesList from './RoutesList';
+import JoblyApi from './api.js';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 //TODO: Homepage, set a ternary so that if a user is logged in, then display
@@ -33,61 +33,75 @@ function App() {
     isLoading: true,
     error: null
   });
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(null);
 
-  //TODO: useEffect(() => ( JoblyAPI.getUser )), [token]
 
-  //function login({username, password}){
-
-  }
-
-  /**
-   * loginUser function will take in strings 'username' and 'password'. Will
-   * attempt to login user with a try/catch block. If successful, update token
-   * state. If error, update user state with error.
-   */
-
-  //TODO: rename this async function
-  async function loginUser(username, password) {
-    let token;
-    let user;
-    try {
-      token = await JoblyApi.getToken(username, password);
-      // user = await JoblyApi.getUser(username)
-    } catch (err) {
+/**Get user data and set userData if token exists */
+  useEffect(function fetchUserDataOnMount() {
+    async function fetchUserData() {
+      const userResult = await JoblyApi.getUser(user.userData);
+      console.log("userData is:", userData);
       setUser({
-        userData: null,
-        isLoading: true,
-        error: true
-      })
+        userData: userResult,
+        isLoading: false,
+        error: null
+      });
     }
-    setToken(token);
+    if (token) fetchUserData();
+  }, [token]);
+
+/**
+ * loginUser function will take in strings 'username' and 'password'. Will
+ * attempt to login user with a try/catch block. If successful, update token
+ * state. If error, update user state with error.
+ */
+
+//TODO: rename this async function
+async function loginUser(username, password) {
+  let token;
+  try {
+    token = await JoblyApi.getToken(username, password);
+  } catch (err) {
+    setUser({
+      userData: null,
+      isLoading: true,
+      error: true
+    });
   }
+  setUser({
+    userData: username,
+    isLoading: true,
+    error: null
+  });
+  setToken(token);
+}
 
-  /**
-   * registerUser function
-   */
+/**
+ * registerUser function
+ */
 
-  /**
-   * logoutUser function
-   */
+/**
+ * logoutUser function
+ */
 
-  /**
-   * updateProfile function
-   */
+/**
+ * updateProfile function
+ */
 
-  /**
-   * applyToJob function
-   */
+/**
+ * applyToJob function
+ */
 
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Navigation />
-        <RoutesList />
-      </BrowserRouter>
-    </div>
-  );
+if(user.isLoading) return <p>Loading...</p>
+
+return (
+  <div className="App">
+    <BrowserRouter>
+      <Navigation />
+      <RoutesList />
+    </BrowserRouter>
+  </div>
+);
 }
 
 export default App;
