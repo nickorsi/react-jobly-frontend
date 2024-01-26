@@ -33,7 +33,6 @@ function App() {
       setUser({
         userData: userResult,
         isLoading: false,
-        error: null
       });
     }
     if (token) fetchUserData();
@@ -88,8 +87,12 @@ function App() {
   /**
    * editProfile function
    */
-  function editProfile() {
-    console.log("editProfile");
+  async function editProfile({username, firstName, lastName, email}) {
+    const user = await JoblyApi.editUser(username, firstName, lastName, email);
+    setUser({
+      userData: user,
+      isLoading: false
+    })
   };
 
   /**

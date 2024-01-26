@@ -40,7 +40,8 @@ function RoutesList({
           <Route
             path="/profile"
             element={<EditProfileForm
-              updateProfile={editProfile} />} />
+              user={user}
+              editProfile={editProfile} />} />
           <Route path="/companies/:handle" element={<CompanyDetail />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>

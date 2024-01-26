@@ -128,14 +128,14 @@ class JoblyApi {
     return JoblyApi.token;
   }
 
-  /**updateUser updates a users info, takes in a string 'username', 'firstName',
+  /**editUser updates a users info, takes in a string 'username', 'firstName',
    * 'lastName', 'email'.
    *
    * Returns object like
    * {username, firstName, lastName, email, isAdmin}
   */
 
-  static async updateUser(username, firstName, lastName, email) {
+  static async editUser(username, firstName, lastName, email) {
     const data = { firstName, lastName, email };
     const res = await this.request(`users/${username}`, data, "PATCH");
     console.log("updateUser response:", res.user);

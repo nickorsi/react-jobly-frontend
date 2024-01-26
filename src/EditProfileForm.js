@@ -3,12 +3,12 @@ import './EditProfileForm.css';
 
 
 /**
- * EditProfileForm component takes in prop initialData and editProfile which
+ * EditProfileForm component takes in prop user and editProfile which
  * is a callback and renders a Edit Profile form. Has state to keep track of
  * formData.
  *
  * Props:
- * -initialData: value to populate EditProfile
+ * -user: data about user
  * -editProfile: function on the parent
  *
  * State:
@@ -17,8 +17,9 @@ import './EditProfileForm.css';
  * RouteList -> EditProfileForm
  */
 
-function EditProfileForm({ initialData, editProfile, userData }) {
-  const [formData, setFormData] = useState(initialData);
+function EditProfileForm({ user, editProfile}) {
+  const {username, firstName, lastName, email} = user.userData;
+  const [formData, setFormData] = useState({username, firstName, lastName, email});
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
   console.log("EditProfileForm formData:", formData);
@@ -44,13 +45,16 @@ function EditProfileForm({ initialData, editProfile, userData }) {
     try {
       await editProfile(formData);
       setSuccessMsg("Successfully editted profile!");
+      setErrorMsg(null);
     } catch (err) {
       setErrorMsg(err);
+      setSuccessMsg(null);
     }
   }
   return (
     <div className="EditProfileForm">
       <form className="EditProfileForm-form" onSubmit={handleSubmit}>
+        <div>
         <label htmlFor="EditProfile-username">Username</label>
         <input
           id="EditProfile-username"
@@ -59,7 +63,8 @@ function EditProfileForm({ initialData, editProfile, userData }) {
           onChange={handleChange}
           disabled
         />
-
+        </div>
+        <div>
         <label htmlFor="EditProfile-fn">First name</label>
         <input
           id="EditProfile-fn"
@@ -67,7 +72,8 @@ function EditProfileForm({ initialData, editProfile, userData }) {
           value={formData.firstName}
           onChange={handleChange}
         />
-
+        </div>
+        <div>
         <label htmlFor="EditProfile-ln">Last name</label>
         <input
           id="EditProfile-ln"
@@ -75,7 +81,8 @@ function EditProfileForm({ initialData, editProfile, userData }) {
           value={formData.lastName}
           onChange={handleChange}
         />
-
+        </div>
+        <div>
         <label htmlFor="EditProfile-email">Email</label>
         <input
           id="EditProfile-email"
@@ -83,6 +90,7 @@ function EditProfileForm({ initialData, editProfile, userData }) {
           value={formData.email}
           onChange={handleChange}
         />
+        </div>
 
         {successMsg &&
         <div className="EditProfileForm-success">
