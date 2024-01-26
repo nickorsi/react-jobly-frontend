@@ -92,12 +92,12 @@ function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, userData }
           value={formData.email}
           onChange={handleChange}
         />
-        <div className="RegisterForm-error">
-          {userData.error
-            ? userData.errors.message.map((e, i) => <p key={i} >{e}</p>)
-            : ""
-          }
-        </div>
+        {userData.error
+          ? <div className="RegisterForm-error">
+              {userData.errors.message.map((e, i) => <p key={i} >{e}</p>)}
+            </div>
+          : ""
+        }
         <button className="RegisterForm-button">
           Submit
         </button>
