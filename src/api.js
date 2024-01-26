@@ -98,12 +98,12 @@ class JoblyApi {
    */
 
   static async getToken(username, password) {
-    const data = { username, password};
+    const data = { username, password };
     const res = await this.request('auth/token', data, "POST");
     JoblyApi.token = res.token;
-    console.log("JoblyApi token:", JoblyApi.token, "getToken:", res.token)
+    console.log("JoblyApi token:", JoblyApi.token, "getToken:", res.token);
 
-    return JoblyApi.token
+    return JoblyApi.token;
   }
 
   /** Gets data about a user, takes in a string 'username'
@@ -111,24 +111,49 @@ class JoblyApi {
    * {username, firstName, lastName, email, isAdmin, applications}
    */
 
-  static async getUser(username){
-    const data = { username }
-    const res = await this.request('users/', data);
+  static async getUser(username) {
+    const res = await this.request(`users/${username}`);
     console.log("getUser response:", res.user);
     return res.user;
   }
 
-  /**Registers a new user, takes in a string 'username', 'password', 'firstName',
-   * 'lastName', 'email'
+  /**registerUser registers a new user, takes in a string 'username',
+   * 'password', 'firstName','lastName', 'email'
    *
    * Returns a token
    */
-  static async register(username, password, firstName, lastName, email){
-    const data = { username, password, firstName, lastName, email }
+  static async registerUser(username, password, firstName, lastName, email) {
+    const data = { username, password, firstName, lastName, email };
     const res = await this.request('auth/register', data, "POST");
     JoblyApi.token = res.token;
     console.log("JoblyApi token:", JoblyApi.token, "getToken:", res.token);
-    return JoblyApi.token
+    return JoblyApi.token;
+  }
+
+  /**updateUser updates a users info, takes in a string 'username', 'firstName',
+   * 'lastName', 'email'.
+   *
+   * Returns object like
+   * {username, firstName, lastName, email, isAdmin}
+  */
+
+  static async updateUser(username, firstName, lastName, email) {
+    const data = { firstName, lastName, email };
+    const res = await this.request(`users/${username}`, data, "PATCH");
+    console.log("updateUser response:", res.user);
+    return res.user;
+  }
+
+  /**applyToJob assigns the job by ID to the user data as part of the
+   * applications property. Takes in a string 'username' and a number 'jobId'
+   *
+   * Returns {"applied": jobId}
+  */
+
+  static async applyToJob(username, jobId) {
+    const res = await this.request(`users/${username}/jobs/${jobId}`, "POST");
+    console.log("applyToJob response:", res);
+    return res;
   }
 }
 
