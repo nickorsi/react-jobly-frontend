@@ -4,6 +4,9 @@ import Homepage from "./Homepage";
 import CompanyList from "./CompanyList";
 import JobList from "./JobList";
 import CompanyDetail from "./CompanyDetail";
+import EditProfileForm from './EditProfileForm.js';
+import LoginForm from './LoginForm.js';
+import RegisterForm from './RegisterForm.js';
 
 /** Routes to pages on Jobly app depending on path, shows different components
  *
@@ -36,7 +39,7 @@ function RoutesList({
           <Route path="/jobs" element={<JobList applyToJob={applyToJob} />} />
           <Route
             path="/profile"
-            element={<ProfileEditForm
+            element={<EditProfileForm
               updateProfile={updateProfile} />} />
           <Route path="/companies/:handle" element={<CompanyDetail />} />
           <Route path="/*" element={<Navigate to="/" />} />
