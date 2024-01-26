@@ -100,10 +100,36 @@ class JoblyApi {
   static async getToken(username, password) {
     const data = { username, password};
     const res = await this.request('auth/token', data, "POST");
+    JoblyApi.token = res.token;
+    console.log("JoblyApi token:", JoblyApi.token, "getToken:", res.token)
 
-    return res.token;
+    return JoblyApi.token
   }
 
+  /** Gets data about a user, takes in a string 'username'
+   * and returns an object like
+   * {username, firstName, lastName, email, isAdmin, applications}
+   */
+
+  static async getUser(username){
+    const data = { username }
+    const res = await this.request('users/', data);
+    console.log("getUser response:", res.user);
+    return res.user;
+  }
+
+  /**Registers a new user, takes in a string 'username', 'password', 'firstName',
+   * 'lastName', 'email'
+   *
+   * Returns a token
+   */
+  static async register(username, password, firstName, lastName, email){
+    const data = { username, password, firstName, lastName, email }
+    const res = await this.request('auth/register', data, "POST");
+    JoblyApi.token = res.token;
+    console.log("JoblyApi token:", JoblyApi.token, "getToken:", res.token);
+    return JoblyApi.token
+  }
 }
 
 export default JoblyApi;
