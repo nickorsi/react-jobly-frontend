@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './RegisterForm.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const DEFAULT_INITIAL_DATA = {
   username: "",
@@ -27,6 +29,8 @@ const DEFAULT_INITIAL_DATA = {
 function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, user }) {
   console.log("Register userData:", user);
   const [formData, setFormData] = useState(initialData);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const navigate = useNavigate();
   console.log("RegisterForm formData:", formData);
 
   /**
@@ -45,9 +49,14 @@ function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, user }) {
    * handleSubmit invokes the register function passing in formData
    */
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    register(formData);
+    try {
+      await register(formData);
+      navigate("/");
+    } catch (err) {
+      setErrorMsg(err);
+    }
   }
 
   return (
@@ -105,11 +114,10 @@ function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, user }) {
             />
           </div>
 
-          {user.error
-            ? <div className="RegisterForm-error">
-              {user.errors.message.map((e, i) => <p key={i} >{e}</p>)}
+          {errorMsg &&
+             <div className="RegisterForm-error">
+              {errorMsg.map((e, i) => <p key={i} >{e}</p>)}
             </div>
-            : ""
           }
           <button className="RegisterForm-button">
             Submit

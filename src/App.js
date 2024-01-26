@@ -6,17 +6,6 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import userContext from "./userContext.js";
 
-//TODO: Homepage, set a ternary so that if a user is logged in, then display
-//homepage with greeting and user's name, else, display login, signup buttons
-
-//TODO: Navigation, set a ternary so that if a user is logged in,
-// then display nav with navlinks to home, companies, profile, jobs, logout
-// else display home, login, signup
-
-//TODO: login:
-
-
-
 /** Renders Jobly App and Navigation componenet
  *
  * Props: None
@@ -32,7 +21,6 @@ function App() {
   const [user, setUser] = useState({
     userData: null,
     isLoading: true,
-    error: null
   });
   const [token, setToken] = useState(null);
 
@@ -59,31 +47,30 @@ function App() {
    */
 
   async function loginUser({ username, password }) {
-    let token;
-    try {
-      token = await JoblyApi.getToken(username, password);
-      setUser({
-        userData: username,
-        isLoading: true,
-        error: null
-      });
-      setToken(token);
-    } catch (err) {
-      console.log("login error!");
-      setUser({
-        userData: null,
-        isLoading: true,
-        error: true
-      });
-    }
+    const token = await JoblyApi.loginUser(username, password);
+    setUser({
+      userData: username,
+      isLoading: true,
+    });
+    setToken(token);
   }
 
   /**
    * registerUser function
    *
    */
-  function registerUser() {
-    console.log("RegisterUser");
+  async function registerUser({ username, password, firstName, lastName, email }) {
+    const token = await JoblyApi.registerUser(
+      username,
+      password,
+      firstName,
+      lastName,
+      email);
+    setUser({
+      userData: username,
+      isLoading: true,
+    });
+    setToken(token);
   };
   /**
    * logoutUser function

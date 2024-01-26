@@ -19,6 +19,8 @@ import './EditProfileForm.css';
 
 function EditProfileForm({ initialData, editProfile, userData }) {
   const [formData, setFormData] = useState(initialData);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [successMsg, setSuccessMsg] = useState(null);
   console.log("EditProfileForm formData:", formData);
 
   /**
@@ -37,11 +39,15 @@ function EditProfileForm({ initialData, editProfile, userData }) {
    * handleSubmit invokes the editProfile function passing in formData
    */
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    editProfile(formData);
+    try {
+      await editProfile(formData);
+      setSuccessMsg("Successfully editted profile!");
+    } catch (err) {
+      setErrorMsg(err);
+    }
   }
-
   return (
     <div className="EditProfileForm">
       <form className="EditProfileForm-form" onSubmit={handleSubmit}>
@@ -78,11 +84,16 @@ function EditProfileForm({ initialData, editProfile, userData }) {
           onChange={handleChange}
         />
 
-        {userData.error
-          ? <div className="EditProfileForm-error">
-              {userData.errors.message.map((e, i) => (<p key={i} >{e}</p>))}
-            </div>
-          : ""
+        {successMsg &&
+        <div className="EditProfileForm-success">
+          <p>{successMsg}</p>
+        </div>
+        }
+
+        {errorMsg &&
+          <div className="EditProfileForm-error">
+            {errorMsg.map((e, i) => <p key={i} >{e}</p>)}
+          </div>
         }
         <button className="EditProfileForm-button">
           Submit

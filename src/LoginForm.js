@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
+import { useNavigate } from 'react-router-dom';
 
 const DEFAULT_INITIAL_DATA = {
   username: "testuser",
@@ -22,6 +23,8 @@ const DEFAULT_INITIAL_DATA = {
 
 function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, user }) {
   const [formData, setFormData] = useState(initialData);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const navigate = useNavigate();
   console.log("LoginForm formData:", formData);
 
 
@@ -38,12 +41,20 @@ function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, user }) {
   }
 
   /**
-   * handleSubmit invokes the login function passing in formData
+   * handleSubmit invokes the login function passing in formData. On success,
+   * navigates user to homepage.
+   *
+   * If not successful, updates error state.
    */
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    login(formData);
+    try {
+      await login(formData);
+      navigate("/");
+    } catch (err) {
+      setErrorMsg(err);
+    }
   }
 
   return (
@@ -71,15 +82,10 @@ function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, user }) {
             />
           </div>
 
-
-          {user.error
-            ? <div className="LoginForm-error">
+          {errorMsg &&
+            <div className="LoginForm-error">
               <p className="LoginForm-error-ms" >Invalid username/password</p>
-
-            </div>//TODO: Bug here where error msg will persist after unsuccessful
-            //login, moving to a different page and coming back to login. Error msg will continue to show
-            //maybe we can us the user setter function to reset errors on the user to null after displaying the msg?
-            : ""
+            </div>
           }
           <button className="LoginForm-button">
             Submit

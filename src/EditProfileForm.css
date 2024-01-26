@@ -3,3 +3,9 @@
   border-radius: 10px;
   color: darkred;
 }
+
+.EditProfileForm-success {
+  border: 1px solid green;
+  border-radius: 10px;
+  color: lightgreen;
+}

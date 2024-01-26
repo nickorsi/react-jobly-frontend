@@ -95,7 +95,7 @@ class JoblyApi {
    * login, error on failure.
    */
 
-  static async getToken(username, password) {
+  static async loginUser(username, password) {
     const data = { username, password };
     const res = await this.request('auth/token', data, "POST");
     JoblyApi.token = res.token;
