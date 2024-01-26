@@ -49,7 +49,7 @@ function RoutesList({
           <Route
             path="/login"
             element={<LoginForm
-              loginUser={login}
+              login={login}
               user={user}
             />} />
           <Route
@@ -58,7 +58,7 @@ function RoutesList({
               register={register}
               user={user}
             />} />
-          <Route path="/" element={<Homepage />} />
+           <Route path="/" element={<Homepage />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
       }

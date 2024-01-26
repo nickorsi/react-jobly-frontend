@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './LoginForm.css';
 
 const DEFAULT_INITIAL_DATA = {
-  username: "",
-  password: ""
+  username: "testuser",
+  password: "password"
 };
 
 /**

@@ -52,12 +52,13 @@ function App() {
   }, [token]);
 
   /**
-   * loginUser function will take in strings 'username' and 'password'. Will
-   * attempt to login user with a try/catch block. If successful, update token
-   * state. If error, update user state with error.
+   * loginUser function will take in an object with properties 'username' and
+   * 'password' both with strings as values. Will attempt to login user with a
+   * try/catch block. If successful, update token state. If error, update user
+   * state with error.
    */
 
-  async function loginUser(username, password) {
+  async function loginUser({username, password}) {
     let token;
     try {
       token = await JoblyApi.getToken(username, password);
