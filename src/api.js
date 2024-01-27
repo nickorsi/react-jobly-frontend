@@ -99,7 +99,7 @@ class JoblyApi {
     const data = { username, password };
     const res = await this.request('auth/token', data, "POST");
     JoblyApi.token = res.token;
-    console.log("JoblyApi token:", JoblyApi.token, "getToken:", res.token);
+    // console.log("JoblyApi token:", JoblyApi.token, "getToken:", res.token);
 
     return JoblyApi.token;
   }

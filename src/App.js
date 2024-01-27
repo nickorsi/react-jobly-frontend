@@ -5,6 +5,7 @@ import JoblyApi from './api.js';
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import userContext from "./userContext.js";
+import { jwtDecode } from 'jwt-decode';
 
 /** Renders Jobly App and Navigation componenet
  *
@@ -23,21 +24,21 @@ function App() {
     userData: null,
     isLoading: false,
   });
-  const [token, setToken] = useState(checkLocalStorage());
-  const [applications, setApplications] = useState([]);
+  // const [token, setToken] = useState(localStorage.getItem("_token"));
 
-  /**checkLocalStorage looks for a valid token in the client local storage
-   * by the "_token" key.
-   */
-  function checkLocalStorage () {
-    return localStorage.getItem("_token");
-  }
+  const [applications, setApplications] = useState([]);
+  const token = localStorage.getItem("_token");
+  console.log("user:", user, "token", token);
+
   /**Get user data and set userData to userResult
    *  and isLoading to false if token exists */
 
-  useEffect(function fetchUserDataOnMount() {
+  useEffect(function fetchUserDataWhenTokenChanges() {
+    console.log("fetchUserDataWhenTokenChanges");
     async function fetchUserData() {
-      const userResult = await JoblyApi.getUser(user.userData);
+      const userPayload = jwtDecode(token);
+      JoblyApi.token = token;
+      const userResult = await JoblyApi.getUser(userPayload.username);
       console.log("userResult is:", userResult);
       setUser({
         userData: userResult,
@@ -45,7 +46,7 @@ function App() {
       });
     }
     if (token) fetchUserData();
-  }, [token]);
+  }, []);
 
   /**
    * loginUser function will take in an object with properties 'username' and
@@ -53,14 +54,14 @@ function App() {
    */
 
   async function loginUser({ username, password }) {
-    console.log("loginUser")
+    console.log("loginUser");
     const token = await JoblyApi.loginUser(username, password);
     localStorage.setItem("_token", token);
     setUser({
       userData: username,
-      isLoading: true,
+      isLoading: false,
     });
-    setToken(token);
+    // setToken(token);
   }
 
   /**
@@ -79,9 +80,9 @@ function App() {
     localStorage.setItem("_token", token);
     setUser({
       userData: username,
-      isLoading: true,
+      isLoading: false,
     });
-    setToken(token);
+    // setToken(token);
   };
 
 
@@ -94,19 +95,20 @@ function App() {
       userData: null,
       isLoading: false,
     });
-    setToken(null);
+    localStorage.clear();
+    // setToken(null);
   };
 
   /**
    * editProfile function takes in an object like
    * {username, firstName, lastName, email} and updates user state.
    */
-  async function editProfile({username, firstName, lastName, email}) {
+  async function editProfile({ username, firstName, lastName, email }) {
     const user = await JoblyApi.editUser(username, firstName, lastName, email);
     setUser({
       userData: user,
       isLoading: false
-    })
+    });
   };
 
   /**
@@ -118,7 +120,10 @@ function App() {
   };
 
 
-  if(user.isLoading) return <p>Loading...</p>
+  if (user.isLoading) return <p>Loading...</p>;
+  if (user.userData === null && token){
+    return <p>We are loading...</p>;
+  }
 
   return (
     <div className="App">
