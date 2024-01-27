@@ -23,10 +23,15 @@ function App() {
     userData: null,
     isLoading: false,
   });
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(checkLocalStorage());
   const [applications, setApplications] = useState([]);
 
-
+  /**checkLocalStorage looks for a valid token in the client local storage
+   * by the "_token" key.
+   */
+  function checkLocalStorage () {
+    return localStorage.getItem("_token");
+  }
   /**Get user data and set userData to userResult
    *  and isLoading to false if token exists */
 
@@ -48,7 +53,9 @@ function App() {
    */
 
   async function loginUser({ username, password }) {
+    console.log("loginUser")
     const token = await JoblyApi.loginUser(username, password);
+    localStorage.setItem("_token", token);
     setUser({
       userData: username,
       isLoading: true,
@@ -69,6 +76,7 @@ function App() {
       firstName,
       lastName,
       email);
+    localStorage.setItem("_token", token);
     setUser({
       userData: username,
       isLoading: true,

@@ -26,7 +26,7 @@ function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login}) {
   const [formData, setFormData] = useState(initialData);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-  // console.log("LoginForm formData:", formData);
+  console.log("LoginForm formData:", formData);
 
   /**
    * handleChange updates formData state based on user input.
@@ -53,6 +53,7 @@ function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login}) {
       await login(formData);
       navigate("/");
     } catch (err) {
+      console.log(err)
       setErrorMsg(err);
     }
   }
