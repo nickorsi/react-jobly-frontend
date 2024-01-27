@@ -11,21 +11,25 @@ import userContext from "./userContext.js";
  * Props: None
  *
  * State:
- * -user: State about user in object like {userData, isLoading, error}
+ * -user: State about user in object like {userData, isLoading}
  * -token: String representing token
  * -applications: Set of job IDs saved as numbers?
  *
  * App -> {Navigation, RoutesList}
  */
+
 function App() {
   const [user, setUser] = useState({
     userData: null,
-    isLoading: true,
+    isLoading: false,
   });
   const [token, setToken] = useState(null);
+  const [applications, setApplications] = useState([]);
 
 
-  /**Get user data and set userData if token exists */
+  /**Get user data and set userData to userResult
+   *  and isLoading to false if token exists */
+
   useEffect(function fetchUserDataOnMount() {
     async function fetchUserData() {
       const userResult = await JoblyApi.getUser(user.userData);
@@ -40,9 +44,7 @@ function App() {
 
   /**
    * loginUser function will take in an object with properties 'username' and
-   * 'password' both with strings as values. Will attempt to login user with a
-   * try/catch block. If successful, update token state. If error, update user
-   * state with error.
+   * 'password' both with strings as values. Updates token state.
    */
 
   async function loginUser({ username, password }) {
@@ -55,9 +57,11 @@ function App() {
   }
 
   /**
-   * registerUser function
-   *
+   * registerUser function will take in an object like
+   * {username, password, firstName, lastName, email}.
+   * Updates user state and token
    */
+
   async function registerUser({ username, password, firstName, lastName, email }) {
     const token = await JoblyApi.registerUser(
       username,
@@ -71,21 +75,23 @@ function App() {
     });
     setToken(token);
   };
+
+
   /**
-   * logoutUser function
+   * logoutUser function logs user out and resets token and user State.
    */
 
   function logoutUser() {
     setUser({
       userData: null,
       isLoading: false,
-      error: null
     });
     setToken(null);
   };
 
   /**
-   * editProfile function
+   * editProfile function takes in an object like
+   * {username, firstName, lastName, email} and updates user state.
    */
   async function editProfile({username, firstName, lastName, email}) {
     const user = await JoblyApi.editUser(username, firstName, lastName, email);
@@ -97,20 +103,22 @@ function App() {
 
   /**
    * applyToJob function
+   * //TODO:
    */
   function applyToJob(id) {
     console.log("applyToJob");
   };
 
-  // if(user.isLoading) return <p>Loading...</p>
+
+  if(user.isLoading) return <p>Loading...</p>
 
   return (
     <div className="App">
       <BrowserRouter>
         <userContext.Provider value={user}>
-          <Navigation logout={logoutUser} user={user} />
+          <Navigation logout={logoutUser} user={user.userData} />
           <RoutesList
-            user={user}
+            user={user.userData}
             login={loginUser}
             register={registerUser}
             editProfile={editProfile}

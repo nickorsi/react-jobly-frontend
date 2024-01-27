@@ -3,8 +3,8 @@ import './LoginForm.css';
 import { useNavigate } from 'react-router-dom';
 
 const DEFAULT_INITIAL_DATA = {
-  username: "testuser",
-  password: "password"
+  username: "",
+  password: ""
 };
 
 /**
@@ -17,16 +17,16 @@ const DEFAULT_INITIAL_DATA = {
  *
  * State:
  * -formData
+ * -errorMsg: an array containing error msgs
  *
  * RouteList -> LoginForm
  */
 
-function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, user }) {
+function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login}) {
   const [formData, setFormData] = useState(initialData);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-  console.log("LoginForm formData:", formData);
-
+  // console.log("LoginForm formData:", formData);
 
   /**
    * handleChange updates formData state based on user input.
@@ -56,7 +56,8 @@ function LoginForm({ initialData = DEFAULT_INITIAL_DATA, login, user }) {
       setErrorMsg(err);
     }
   }
-
+//TODO: wrap labels and inputs in separate divs
+//TODO: further study, have a separate error component
   return (
     <div className="LoginForm">
       <h1>Log In</h1>

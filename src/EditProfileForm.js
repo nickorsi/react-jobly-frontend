@@ -5,24 +5,26 @@ import './EditProfileForm.css';
 /**
  * EditProfileForm component takes in prop user and editProfile which
  * is a callback and renders a Edit Profile form. Has state to keep track of
- * formData.
+ * formData, errorMsg, and successMsg
  *
  * Props:
  * -user: data about user
  * -editProfile: function on the parent
  *
  * State:
- * -formData
+ * -formData: an object like {username, firstName, lastName, email}
+ * -errorMsg: an array containing error msgs
+ * -successMsg: a string
  *
  * RouteList -> EditProfileForm
  */
 
 function EditProfileForm({ user, editProfile}) {
-  const {username, firstName, lastName, email} = user.userData;
+  const {username, firstName, lastName, email} = user;
   const [formData, setFormData] = useState({username, firstName, lastName, email});
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
-  console.log("EditProfileForm formData:", formData);
+  // console.log("EditProfileForm formData:", formData);
 
   /**
    * handleChange updates formData state based on user input.
@@ -37,7 +39,11 @@ function EditProfileForm({ user, editProfile}) {
   }
 
   /**
-   * handleSubmit invokes the editProfile function passing in formData
+   * handleSubmit invokes the editProfile function passing in formData.
+   * formData like {username, firstName, lastName, email}
+   *
+   * Sets successMsg state on successful submission or sets errorMsg state
+   * on failure
    */
 
   async function handleSubmit(evt) {
@@ -51,6 +57,7 @@ function EditProfileForm({ user, editProfile}) {
       setSuccessMsg(null);
     }
   }
+
   return (
     <div className="EditProfileForm">
       <form className="EditProfileForm-form" onSubmit={handleSubmit}>

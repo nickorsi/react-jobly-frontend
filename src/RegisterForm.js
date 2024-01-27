@@ -22,16 +22,16 @@ const DEFAULT_INITIAL_DATA = {
  *
  * State:
  * -formData
+ * -errorMsg: an array containing error msgs
  *
  * RouteList -> RegisterForm
  */
 
-function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, user }) {
-  console.log("Register userData:", user);
+function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register}) {
   const [formData, setFormData] = useState(initialData);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-  console.log("RegisterForm formData:", formData);
+  // console.log("RegisterForm formData:", formData);
 
   /**
    * handleChange updates formData state based on user input.
@@ -45,8 +45,11 @@ function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, user }) {
     }));
   }
 
-  /**
-   * handleSubmit invokes the register function passing in formData
+   /**
+   * handleSubmit invokes the register function passing in formData. On success,
+   * navigates user to homepage.
+   *
+   * If not successful, updates error state.
    */
 
   async function handleSubmit(evt) {
@@ -58,7 +61,8 @@ function RegisterForm({ initialData = DEFAULT_INITIAL_DATA, register, user }) {
       setErrorMsg(err);
     }
   }
-
+//TODO: have labels in their own div and inputs to their own div
+//TODO: further study: can make a component that handles errors
   return (
     <div className="RegisterForm">
       <h1>Sign Up</h1>

@@ -8,19 +8,32 @@ import EditProfileForm from './EditProfileForm.js';
 import LoginForm from './LoginForm.js';
 import RegisterForm from './RegisterForm.js';
 
-/** Routes to pages on Jobly app depending on path, shows different components
+/** Routes to pages on Jobly app depending on user log in,
+ * shows different components
  *
  * Props:
+ *  -user - either an object like
+ *    {username, firstName, lastName, email, isAdmin} or null
  * -login - a function on the parent
  * -register - a function on the parent
  * -updateProfile - a function on the parent
- * -userData - either an object like
- *    {username, firstName, lastName, email, isAdmin} or null
  * -applyToJob - a function on the parent
  *
  * State: None
  *
- * App -> RoutesList -> {Homepage, CompanyList, CompanyDetail, JobList}
+ * If not logged in:
+ * App -> RoutesList -> {Homepage, LoginForm, RegisterForm}
+ *
+ * If user is logged in:
+ * App -> RoutesList ->
+ *  {
+ *      Homepage,
+ *      CompanyList,
+ *      JobList,
+ *      EditProfileForm,
+ *      CompanyDetail
+ *  }
+ *
  */
 function RoutesList({
   user,
@@ -30,40 +43,25 @@ function RoutesList({
   applyToJob }) {
 
   return (
-    <div>
-      {user.userData
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+      {user
         ?
-        <Routes>
-          <Route path="/" element={<Homepage />} />
+        <>
           <Route path="/companies" element={<CompanyList />} />
           <Route path="/jobs" element={<JobList applyToJob={applyToJob} />} />
-          <Route
-            path="/profile"
-            element={<EditProfileForm
-              user={user}
-              editProfile={editProfile} />} />
+          <Route path="/profile"
+            element={<EditProfileForm user={user} editProfile={editProfile} />} />
           <Route path="/companies/:handle" element={<CompanyDetail />} />
-          <Route path="/*" element={<Navigate to="/" />} />
-        </Routes>
+        </>
         :
-        <Routes>
-          <Route
-            path="/login"
-            element={<LoginForm
-              login={login}
-              user={user}
-            />} />
-          <Route
-            path="/register"
-            element={<RegisterForm
-              register={register}
-              user={user}
-            />} />
-           <Route path="/" element={<Homepage />} />
-          <Route path="/*" element={<Navigate to="/" />} />
-        </Routes>
+        <>
+          <Route path="/login" element={<LoginForm login={login} />} />
+          <Route path="/register" element={<RegisterForm register={register} />} />
+        </>
       }
-    </div>
+      <Route path="/*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 
