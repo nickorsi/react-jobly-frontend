@@ -120,7 +120,7 @@ function App() {
   };
 
 
-  if (user.isLoading) return <p>Loading...</p>;
+  // if (user.isLoading) return <p>Loading...</p>;
   if (user.userData === null && token){
     return <p>We are loading...</p>;
   }
